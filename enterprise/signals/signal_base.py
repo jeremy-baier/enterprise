@@ -254,7 +254,8 @@ class LogLikelihood(object):
                     cf = sl.cho_factor(TNT + phiinv)  # cf(Sigma)
                     expval = sl.cho_solve(cf, TNr)
                     logdet_sigma = 2 * np.sum(np.log(np.diag(cf[0])))
-                except sl.LinAlgError:  # pragma: no cover
+                except sl.LinAlgError as e:  # pragma: no cover
+                    print(e)
                     return -np.inf
 
             loglike += 0.5 * (np.dot(TNr, expval) - logdet_sigma - logdet_phi)
